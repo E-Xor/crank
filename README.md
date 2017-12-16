@@ -90,12 +90,39 @@ chmod +x ~/mount_nfs.sh
 ~/mount_nfs.sh
 ls -al /root/app
 
+# Rails
+
+gem install rails --version '~> 5.1.4' --no-ri --no-rdoc
+rails new web-crank --skip-bundle
+mv ./rails/.ruby-version ./web-crank/
+rm -rf rails/
+mv web-crank/ rails
+cd rails
+# cleanup Gemfile
+# create .gemrc
+bundle install
+
+# DB and User
+
+CREATE DATABASE 'crank';
+
+CREATE USER 'crank'@'%';
+CREATE USER 'crank'@'localhost';
+CREATE DATABASE crank;
+GRANT ALL PRIVILEGES ON crank.* TO 'crank'@'%';
+GRANT ALL PRIVILEGES ON crank.* TO 'crank'@'localhost';
+SET PASSWORD FOR 'crank'@'%' = PASSWORD('crankpasswd');
+SET PASSWORD FOR 'crank'@'localhost' = PASSWORD('crankpasswd');
+FLUSH PRIVILEGES;
+
 # Next
 
-MySQL separate user/db
-crank:passwd
+devise
+puma -e production -p 9293 -d
+https://github.com/rails/web-console
+listen
+spring
 
-apps, bundle install, rails
 ```
 
 ## Staging/Prod creation

@@ -1,0 +1,20 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  username: crank
+  password: crankpasswd
+  host: docker.for.mac.localhost
+  database: crank
+  port: 3306
+  reconnect: true
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: crank_test
+
+production:
+  <<: *default
+
