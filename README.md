@@ -11,7 +11,7 @@ docker pull ubuntu:14.04
 docker run -it ubuntu:14.04 bash
 
 apt-get update
-apt-get install curl nano wget vim python3 curl git nfs-common build-essential zlibc zlib1g-dev bzip2 lbzip2 libreadline-dev lbzip2 libssl-dev libbz2-dev libreadline-dev mysql-client -y
+apt-get install curl nano wget vim python3 curl git nfs-common build-essential zlibc zlib1g-dev bzip2 lbzip2 libreadline-dev lbzip2 libssl-dev libbz2-dev libreadline-dev mysql-client libmysqlclient-dev -y
 
 # MySQL
 
@@ -21,10 +21,10 @@ mysql -h docker.for.mac.localhost -u maksim -p tlo_dev
 
 \curl -sSL https://get.rvm.io | bash
 vim /etc/group # add 0 at the end to rvm group, i.e. `rvm:x:1000:0`
-source /etc/profile.d/rvm.sh
 vim ~/.bashrc # =============================
 # add
 source /etc/profile.d/rvm.sh
+PS1="\$(rvm-prompt s) $PS1"
 # =============================
 source ~/.bashrc
 rvm install ruby-2.4.2
@@ -82,13 +82,19 @@ vim ~/mount_nfs.sh =============================
 
 echo "Mounting NFS"
 mkdir -p /root/nfs_mnt
-mount -vvvvvvvv -t nfs -o proto=tcp,nfsvers=3,nolock docker.for.mac.localhost:$NFS_PATH /root/app
+# mount -vvvvvvvv -t nfs -o proto=tcp,nfsvers=3,nolock docker.for.mac.localhost:$NFS_PATH /root/app
+mount -t nfs -o proto=tcp,nfsvers=3,nolock docker.for.mac.localhost:$NFS_PATH /root/app
 echo "Done with NFS"
 =============================
 
 chmod +x ~/mount_nfs.sh
 ~/mount_nfs.sh
 ls -al /root/app
+
+vim ~/.bashrc # =============================
+# add
+source ~/mount_nfs.sh
+=============================
 
 # Rails
 
@@ -115,10 +121,23 @@ SET PASSWORD FOR 'crank'@'%' = PASSWORD('crankpasswd');
 SET PASSWORD FOR 'crank'@'localhost' = PASSWORD('crankpasswd');
 FLUSH PRIVILEGES;
 
-# Next
+# Devise
 
-devise
-puma -e production -p 9293 -d
+rails generate devise:install
+rails g devise:views
+rails g devise User
+rails db:migrate
+
+
+# Next ===============================================================================
+
+
+https://github.com/plataformatec/devise
+https://github.com/plataformatec/devise/wiki
+
+puma -p 9293 -d
+# puma --pidfile ./pidfile
+# kill -9 read(./pidfile)
 https://github.com/rails/web-console
 listen
 spring
