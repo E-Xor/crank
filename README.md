@@ -139,9 +139,12 @@ puma -p 9293 -d
 # puma --pidfile ./pidfile
 # kill -9 read(./pidfile)
 https://github.com/rails/web-console
-listen
+
 spring
 
-```
+https://github.com/rails/spring
+https://github.com/rails/spring/issues/378
+https://www.google.com/search?q=rails+spring+how+to
+https://stackoverflow.com/questions/1164091/how-to-stop-a-daemon-server-in-rails
 
-## Staging/Prod creation
+```
