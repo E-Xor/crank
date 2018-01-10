@@ -4,6 +4,8 @@ class HomeController < ApplicationController
 
   def index
     @value = "Welcome home!"
+
+    @value2 = "Yo3!"
     # render :index # I guess it's assumed?
   end
 end

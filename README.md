@@ -11,7 +11,7 @@ docker pull ubuntu:14.04
 docker run -it ubuntu:14.04 bash
 
 apt-get update
-apt-get install curl nano wget vim python3 curl git nfs-common build-essential zlibc zlib1g-dev bzip2 lbzip2 libreadline-dev lbzip2 libssl-dev libbz2-dev libreadline-dev mysql-client libmysqlclient-dev -y
+apt-get install curl nano wget vim python3 curl git nfs-common build-essential zlibc zlib1g-dev bzip2 lbzip2 libreadline-dev lbzip2 libssl-dev libbz2-dev libreadline-dev mysql-client libmysqlclient-dev screen -y
 
 # MySQL
 
@@ -127,24 +127,26 @@ rails generate devise:install
 rails g devise:views
 rails g devise User
 rails db:migrate
+# max.sundukov@gmail.com
+# crankpasswd
 
+# Spring
 
-# Next ===============================================================================
+Prefix `rake` with `spring` to speedup reload. On a first run it will start the server.
+`sprint status` to make sure it runs.
+`sprint stop` to stop it.
+It's no compatible with `bundle exec`.
+It's not clear how it deals with yml changes and web server.
 
+# Dev Server
 
+# puma -p 9293 -d
+puma -p 9293 -d --pidfile ./pidfile
+kill -9 `cat ./pidfile`
+
+Next: =====
+https://github.com/MiniProfiler/rack-mini-profiler
 https://github.com/plataformatec/devise
 https://github.com/plataformatec/devise/wiki
-
-puma -p 9293 -d
-# puma --pidfile ./pidfile
-# kill -9 read(./pidfile)
-https://github.com/rails/web-console
-
-spring
-
-https://github.com/rails/spring
-https://github.com/rails/spring/issues/378
-https://www.google.com/search?q=rails+spring+how+to
-https://stackoverflow.com/questions/1164091/how-to-stop-a-daemon-server-in-rails
 
 ```
